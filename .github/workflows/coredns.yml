@@ -77,8 +77,8 @@ jobs:
 
       - name: Zip Build
         run: |
-          tar -cgz coredns_$GITHUB_REF_NAME_$RUNNER_OS_$RUNNER_ARCH.tgz coredns
-          sha256sum coredns_$GITHUB_REF_NAME_$RUNNER_OS_$RUNNER_ARCH.tgz > coredns_$GITHUB_REF_NAME_$RUNNER_OS_$RUNNER_ARCH.tgz.sha256
+          tar -cz coredns -f coredns_${GITHUB_REF_NAME}_${RUNNER_OS}_${RUNNER_ARCH}.tgz
+          sha256sum coredns_${GITHUB_REF_NAME}_${RUNNER_OS}_${RUNNER_ARCH}.tgz > coredns_${GITHUB_REF_NAME}_${RUNNER_OS}_${RUNNER_ARCH}.tgz.sha256
 
 
       - name: Release
@@ -86,5 +86,5 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
-            coredns_$GITHUB_REF_NAME_$RUNNER_OS_$RUNNER_ARCH.tgz
-            coredns_$GITHUB_REF_NAME_$RUNNER_OS_$RUNNER_ARCH.tgz.sha256
+            coredns_${GITHUB_REF_NAME}_${RUNNER_OS}_${RUNNER_ARCH}.tgz
+            coredns_${GITHUB_REF_NAME}_${RUNNER_OS}_${RUNNER_ARCH}.tgz.sha256

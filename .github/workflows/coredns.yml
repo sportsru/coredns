@@ -77,14 +77,14 @@ jobs:
 
       - name: Zip Build
         run: |
-          tar -cz coredns -f coredns_${GITHUB_REF_NAME}_${RUNNER_OS}_${RUNNER_ARCH}.tgz
-          sha256sum coredns_${GITHUB_REF_NAME}_${RUNNER_OS}_${RUNNER_ARCH}.tgz > coredns_${GITHUB_REF_NAME}_${RUNNER_OS}_${RUNNER_ARCH}.tgz.sha256
-
+          tar -cz coredns -f coredns_${{ github.ref_name }}_${{ runner.os }}_${{ runner.arch }}.tgz
+          sha256sum coredns_${{ github.ref_name }}_${{ runner.os }}_${{ runner.arch }}.tgz > coredns_${{ github.ref_name }}_${{ runner.os }}_${{ runner.arch }}.tgz.sha256
+          ls -lah
 
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
-            coredns_${GITHUB_REF_NAME}_${RUNNER_OS}_${RUNNER_ARCH}.tgz
-            coredns_${GITHUB_REF_NAME}_${RUNNER_OS}_${RUNNER_ARCH}.tgz.sha256
+            coredns_${{ github.ref_name }}_${{ runner.os }}_${{ runner.arch }}.tgz
+            coredns_${{ github.ref_name }}_${{ runner.os }}_${{ runner.arch }}.tgz.sha256

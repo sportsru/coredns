@@ -59,6 +59,7 @@ jobs:
     steps:
 
       - name: Lowercase name
+        id: lc
         uses: ASzc/change-string-case-action@v5
         with:
           string: coredns_${{ github.ref_name }}_${{ runner.os }}_${{ runner.arch }}.tgz
@@ -77,8 +78,8 @@ jobs:
 
       - name: Zip Build
         run: |
-          tar -cz coredns -f ${{ steps.string.outputs.lowercase }}
-          sha256sum ${{ steps.string.outputs.lowercase }} > ${{ steps.string.outputs.lowercase }}.sha256
+          tar -cz coredns -f ${{ steps.lc.outputs.lowercase }}
+          sha256sum ${{ steps.lc.outputs.lowercase }} > ${{ steps.lc.outputs.lowercase }}.sha256
           ls -lah
 
       - name: Release
@@ -86,5 +87,5 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
-            ${{ steps.string.outputs.lowercase }}
-            ${{ steps.string.outputs.lowercase }}.sha256
+            ${{ steps.lc.outputs.lowercase }}
+            ${{ steps.lc.outputs.lowercase }}.sha256
